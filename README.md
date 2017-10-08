@@ -32,3 +32,11 @@ MATH POWER 2017(http://mathpower.sugakubunka.com/)
 * 65537角形
 
 ![result](https://github.com/tomitomi3/DrawNPolygon/blob/master/_pic/draw_65537.PNG)
+
+* Memo
+
+上の数式はCODECOGS ( https://www.codecogs.com/latex/eqneditor.php ) を使いました。
+
+> x^{2} + y^{2} = 1 + p(x,y,n)^{2}
+> p(x,y,n) = tan \left [ \frac{2}{n} tan^{-1} tan\left \{ \frac{n}{2} \left ( tan^{-1} \frac{x}{y} -  \frac{\pi}{2} sign y \right ) \right \} \right ]
+
