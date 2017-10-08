@@ -4,7 +4,16 @@ MATH POWER 2017(http://mathpower.sugakubunka.com/)
 
 # Method
 
+* 正n角形の式
+
+![eq](https://github.com/tomitomi3/DrawNPolygon/blob/master/_pic/eq_1.png)
+![eq](https://github.com/tomitomi3/DrawNPolygon/blob/master/_pic/eq_2.png)
+
+
+
 正n角形の式が成立するときに点を打つことで描いているように見せています。
+
+
 
 # Result
 
