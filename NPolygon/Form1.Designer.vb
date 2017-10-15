@@ -24,10 +24,11 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.oPlot = New OxyPlot.WindowsForms.PlotView()
         Me.ctrlPanel = New System.Windows.Forms.Panel()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.tbxResolution = New System.Windows.Forms.TextBox()
         Me.tbxN = New System.Windows.Forms.TextBox()
         Me.btnDraw = New System.Windows.Forms.Button()
-        Me.tbxResolution = New System.Windows.Forms.TextBox()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me._cbxParametricPlot = New System.Windows.Forms.CheckBox()
         Me.ctrlPanel.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -46,14 +47,32 @@ Partial Class Form1
         '
         'ctrlPanel
         '
+        Me.ctrlPanel.Controls.Add(Me._cbxParametricPlot)
         Me.ctrlPanel.Controls.Add(Me.Label1)
         Me.ctrlPanel.Controls.Add(Me.tbxResolution)
         Me.ctrlPanel.Controls.Add(Me.tbxN)
         Me.ctrlPanel.Controls.Add(Me.btnDraw)
         Me.ctrlPanel.Location = New System.Drawing.Point(12, 12)
         Me.ctrlPanel.Name = "ctrlPanel"
-        Me.ctrlPanel.Size = New System.Drawing.Size(317, 29)
+        Me.ctrlPanel.Size = New System.Drawing.Size(412, 31)
         Me.ctrlPanel.TabIndex = 1
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(268, 8)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(59, 12)
+        Me.Label1.TabIndex = 2
+        Me.Label1.Text = "Resolution"
+        '
+        'tbxResolution
+        '
+        Me.tbxResolution.Location = New System.Drawing.Point(333, 5)
+        Me.tbxResolution.Name = "tbxResolution"
+        Me.tbxResolution.Size = New System.Drawing.Size(70, 19)
+        Me.tbxResolution.TabIndex = 1
+        Me.tbxResolution.Text = "0.002"
         '
         'tbxN
         '
@@ -72,22 +91,17 @@ Partial Class Form1
         Me.btnDraw.Text = "Draw"
         Me.btnDraw.UseVisualStyleBackColor = True
         '
-        'tbxResolution
+        '_cbxParametricPlot
         '
-        Me.tbxResolution.Location = New System.Drawing.Point(242, 5)
-        Me.tbxResolution.Name = "tbxResolution"
-        Me.tbxResolution.Size = New System.Drawing.Size(70, 19)
-        Me.tbxResolution.TabIndex = 1
-        Me.tbxResolution.Text = "0.002"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(177, 8)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(59, 12)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Resolution"
+        Me._cbxParametricPlot.AutoSize = True
+        Me._cbxParametricPlot.Checked = True
+        Me._cbxParametricPlot.CheckState = System.Windows.Forms.CheckState.Checked
+        Me._cbxParametricPlot.Location = New System.Drawing.Point(163, 7)
+        Me._cbxParametricPlot.Name = "_cbxParametricPlot"
+        Me._cbxParametricPlot.Size = New System.Drawing.Size(99, 16)
+        Me._cbxParametricPlot.TabIndex = 3
+        Me._cbxParametricPlot.Text = "ParametricPlot"
+        Me._cbxParametricPlot.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -110,4 +124,5 @@ Partial Class Form1
     Friend WithEvents tbxN As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents tbxResolution As TextBox
+    Friend WithEvents _cbxParametricPlot As CheckBox
 End Class

@@ -42,6 +42,16 @@ Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnDraw.Click
         Me.oPlot.Model.Series.Clear()
 
+        With Nothing
+            Dim n As Double = 3.0
+            Dim t = Math.PI
+            Dim p_t = Math.Tan((2.0 / n) * Math.Atan(Math.Tan((n / 2.0) * (t - (Math.PI / 2.0) * sign(Math.Cos(t))))))
+            Dim f_t = Math.Sqrt(1.0 + p_t * p_t)
+            Dim x_t = f_t * Math.Cos(t)
+            Dim y_t = -f_t * sign(Math.Cos(t)) * Math.Sin(t)
+            Dim h = 1
+        End With
+
         Try
             Dim n = Double.Parse(tbxN.Text())
             If n <= 2 Then
@@ -55,52 +65,76 @@ Public Class Form1
 
             Dim resoulution = Double.Parse(tbxResolution.Text())
 
-            Dim stepWidth As Double = resoulution
-            Dim rangeMin As Double = -2.0 - (stepWidth * 2)
-            Dim rangeMax As Double = 2.0 + (stepWidth * 2)
-            Dim plotCondition As Double = stepWidth * 1.1
+            If _cbxParametricPlot.Checked = True Then
+                '-----------------------------------------------------
+                'parametric plot
+                '-----------------------------------------------------
+                Dim plotF = New OxyPlot.Series.FunctionSeries(Function(t As Double) As Double
+                                                                  Dim p_t = Math.Tan((2.0 / n) * Math.Atan(Math.Tan((n / 2.0) * (t - (Math.PI / 2.0) * sign(Math.Cos(t))))))
+                                                                  Dim f_t = Math.Sqrt(1.0 + p_t * p_t)
+                                                                  Dim x_t = f_t * Math.Cos(t)
+                                                                  Return x_t
+                                                              End Function,
+                                                              Function(t As Double) As Double
+                                                                  Dim p_t = Math.Tan((2.0 / n) * Math.Atan(Math.Tan((n / 2.0) * (t - (Math.PI / 2.0) * sign(Math.Cos(t))))))
+                                                                  Dim f_t = Math.Sqrt(1.0 + p_t * p_t)
+                                                                  Dim y_t = -f_t * sign(Math.Cos(t)) * Math.Sin(t)
+                                                                  Return y_t
+                                                              End Function,
+                                                              0, 2.0 * Math.PI, resoulution, "N Polygon")
+                Me.oPlot.Model.Series.Add(plotF)
+                Me.oPlot.InvalidatePlot(True)
+            Else
+                '-----------------------------------------------------
+                'plot point
+                '-----------------------------------------------------
+                Dim stepWidth As Double = resoulution
+                Dim rangeMin As Double = -2.0 - (stepWidth * 2)
+                Dim rangeMax As Double = 2.0 + (stepWidth * 2)
+                Dim plotCondition As Double = stepWidth * 1.1
 
-            'single thread
-            'For x As Double = rangeMin To rangeMax Step stepWidth
-            '    For y As Double = rangeMin To rangeMax Step stepWidth
-            '        Dim temp = f(x, y, n)
-            '        If temp >= -plotCondition AndAlso temp <= plotCondition Then
-            '            allPoints.Points.Add(New OxyPlot.Series.ScatterPoint(x, y))
-            '        End If
-            '    Next
-            'Next
+                'single thread
+                'For x As Double = rangeMin To rangeMax Step stepWidth
+                '    For y As Double = rangeMin To rangeMax Step stepWidth
+                '        Dim temp = f(x, y, n)
+                '        If temp >= -plotCondition AndAlso temp <= plotCondition Then
+                '            allPoints.Points.Add(New OxyPlot.Series.ScatterPoint(x, y))
+                '        End If
+                '    Next
+                'Next
 
-            'multi thread
-            Dim allPoints2 = New OxyPlot.Series.ScatterSeries()
-            allPoints2.MarkerType = OxyPlot.MarkerType.Circle
-            allPoints2.MarkerSize = 1
-            allPoints2.MarkerStroke = OxyPlot.OxyColors.Green
-            Parallel.Invoke(Sub()
-                                For x As Double = rangeMin To 0 Step stepWidth
-                                    For y As Double = rangeMin To rangeMax Step stepWidth
-                                        Dim temp = f(x, y, n)
-                                        '0±plotConditionの範囲内であれば点をうつ
-                                        If temp >= -plotCondition AndAlso temp <= plotCondition Then
-                                            allPoints.Points.Add(New OxyPlot.Series.ScatterPoint(x, y))
-                                        End If
+                'multi thread
+                Dim allPoints2 = New OxyPlot.Series.ScatterSeries()
+                allPoints2.MarkerType = OxyPlot.MarkerType.Circle
+                allPoints2.MarkerSize = 1
+                allPoints2.MarkerStroke = OxyPlot.OxyColors.Green
+                Parallel.Invoke(Sub()
+                                    For x As Double = rangeMin To 0 Step stepWidth
+                                        For y As Double = rangeMin To rangeMax Step stepWidth
+                                            Dim temp = f(x, y, n)
+                                            '0±plotConditionの範囲内であれば点をうつ
+                                            If temp >= -plotCondition AndAlso temp <= plotCondition Then
+                                                allPoints.Points.Add(New OxyPlot.Series.ScatterPoint(x, y))
+                                            End If
+                                        Next
                                     Next
-                                Next
-                            End Sub,
-                            Sub()
-                                For x As Double = 0 To rangeMax Step stepWidth
-                                    For y As Double = rangeMin To rangeMax Step stepWidth
-                                        Dim temp = f(x, y, n)
-                                        '0±plotConditionの範囲内であれば点をうつ
-                                        If temp >= -plotCondition AndAlso temp <= plotCondition Then
-                                            allPoints2.Points.Add(New OxyPlot.Series.ScatterPoint(x, y))
-                                        End If
+                                End Sub,
+                                Sub()
+                                    For x As Double = 0 To rangeMax Step stepWidth
+                                        For y As Double = rangeMin To rangeMax Step stepWidth
+                                            Dim temp = f(x, y, n)
+                                            '0±plotConditionの範囲内であれば点をうつ
+                                            If temp >= -plotCondition AndAlso temp <= plotCondition Then
+                                                allPoints2.Points.Add(New OxyPlot.Series.ScatterPoint(x, y))
+                                            End If
+                                        Next
                                     Next
-                                Next
-                            End Sub)
+                                End Sub)
 
-            Me.oPlot.Model.Series.Add(allPoints)
-            Me.oPlot.Model.Series.Add(allPoints2)
-            Me.oPlot.InvalidatePlot(True)
+                Me.oPlot.Model.Series.Add(allPoints)
+                Me.oPlot.Model.Series.Add(allPoints2)
+                Me.oPlot.InvalidatePlot(True)
+            End If
         Catch ex As Exception
             'do nothing
         End Try
