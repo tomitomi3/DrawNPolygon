@@ -1,19 +1,16 @@
 # Introduction
-MATH POWER 2017(http://mathpower.sugakubunka.com/)
-のプログラムで「眺めて愛でる数式美術館 あなたも数式を眺めてみませんか？」に出てきた正n角形の式を用いて正n角形を描きます（正しくは点を打つ）
+
+[MATH POWER 2017](http://mathpower.sugakubunka.com/)のプログラムで「眺めて愛でる数式美術館 あなたも数式を眺めてみませんか？」に出てきた正n角形の式を用いて正n角形を描きます
 
 # Method
 
-* 正n角形の式
+* 正n角形の式([@Poyo_f](https://twitter.com/poyo_f))
 
 ![eq](https://github.com/tomitomi3/DrawNPolygon/blob/master/_pic/eq_1.png)
+
 ![eq](https://github.com/tomitomi3/DrawNPolygon/blob/master/_pic/eq_2.png)
 
-
-
-正n角形の式が成立するときに点を打つことで描いているように見せています。
-
-
+媒介変数で描画するモードと正n角形の式が成立するときに点を打つ2つのモードで描きます。
 
 # Result
 
